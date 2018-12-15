@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Resonate.Models;
+using Resonate.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Resonate
 {
@@ -29,8 +31,10 @@ namespace Resonate
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddTransient<IUserRepo, UserRepo>();
+
             services.AddDbContext<ResonateContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ResonateContext")));
+              options.UseSqlServer(Configuration.GetConnectionString("ResonateContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +51,7 @@ namespace Resonate
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
     }
 }
