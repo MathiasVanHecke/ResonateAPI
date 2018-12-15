@@ -18,5 +18,7 @@ namespace Resonate.Models
         public DbSet<User> User { get; set; }
         public DbSet<PotMatches> PotMatches { get; set; }
         public DbSet<Matches> Matches { get; set; }
+        public DbSet<Artist> Artist { get; set; }
+        public DbSet<Genre> Genre { get; set; }
     }
 }

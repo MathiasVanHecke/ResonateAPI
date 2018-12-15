@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Resonate.Models;
 
 namespace Resonate.Repositories
@@ -17,11 +21,33 @@ namespace Resonate.Repositories
             {
                 _context.User.Add(user);
                 _context.SaveChanges();
+
+                //MATCHES MET ARTIESTEN
+                foreach(Artist artist in user.Artists)
+                {
+                    Guid[] ids = _context.Artist.Where(u => u.ArtistName == Convert.ToString(artist.ArtistName) && u.UserId != user.UserId).Select(u => u.UserId).ToArray();
+                    foreach(Guid id in ids)
+                    {
+                       _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 1, Name = artist.ArtistName });
+                       _context.SaveChanges();
+                    }
+                }
+
+                //MATCHES MET GENRES
+                foreach (Genre genre in user.Genres)
+                {
+                    Guid[] ids = _context.Genre.Where(u => u.GenreName == Convert.ToString(genre.GenreName) && u.UserId != user.UserId).Select(u => u.UserId).ToArray();
+                    foreach (Guid id in ids)
+                    {
+                        _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 2, Name = genre.GenreName });
+                        _context.SaveChanges();
+                    }
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
-                return false;
                 throw ex;
             }
         }
