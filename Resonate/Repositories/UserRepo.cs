@@ -23,13 +23,13 @@ namespace Resonate.Repositories
                 _context.SaveChanges();
 
                 //MATCHES MET ARTIESTEN
-                foreach(Artist artist in user.Artists)
+                foreach (Artist artist in user.Artists)
                 {
                     Guid[] ids = _context.Artist.Where(u => u.ArtistName == Convert.ToString(artist.ArtistName) && u.UserId != user.UserId).Select(u => u.UserId).ToArray();
-                    foreach(Guid id in ids)
+                    foreach (Guid id in ids)
                     {
-                       _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 1, Name = artist.ArtistName });
-                       _context.SaveChanges();
+                        _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 1, Name = artist.ArtistName });
+                        _context.SaveChanges();
                     }
                 }
 
@@ -43,7 +43,6 @@ namespace Resonate.Repositories
                         _context.SaveChanges();
                     }
                 }
-
                 return true;
             }
             catch (Exception ex)

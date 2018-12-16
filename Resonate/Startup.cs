@@ -32,6 +32,7 @@ namespace Resonate
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<IMatchesRepo, MatchesRepo>();
 
             services.AddDbContext<ResonateContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("ResonateContext")));

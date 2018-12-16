@@ -6,5 +6,6 @@ namespace Resonate.Models
         public int MatchesId { get; set; }
         public Guid User1 { get; set; }
         public Guid User2 { get; set; }
+        public Boolean IsConfirmed { get; set; }
     }
 }

@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Resonate.Models;
 using Resonate.Repositories;
 
 namespace Resonate.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController
+    public class MatchController
     {
-        private readonly IUserRepo _userRepo;
-        public UserController(IUserRepo userRepo)
+        private readonly IMatchesRepo _matchesRepo;
+        public MatchController(IMatchesRepo matchesRepo)
         {
-            _userRepo = userRepo;
+            _matchesRepo = matchesRepo;
         }
 
-        [HttpPost()]
-        public bool RegisterUser([FromBody] User user)
+        [HttpPost("{user1}/{user2}")]
+        public bool AddMatch(Guid user1, Guid user2)
         {
             try
             {
-                user.UserId = Guid.NewGuid();
-                Boolean succes = _userRepo.RegisterUser(user);
+
+                Boolean succes = _matchesRepo.AddMatch(user1, user2);
                 if (succes)
                 {
                     return succes;
