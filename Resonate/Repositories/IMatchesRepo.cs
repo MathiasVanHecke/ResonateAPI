@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using Resonate.Models;
 
 namespace Resonate.Repositories
 {
     public interface IMatchesRepo
     {
-        bool AddMatch(Guid user1, Guid user2);
+        User AddMatch(Guid user1, Guid user2);
+        List<User> GetMatches(Guid userId);
     }
 }

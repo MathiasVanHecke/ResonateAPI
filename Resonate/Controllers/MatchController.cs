@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Resonate.Models;
 using Resonate.Repositories;
 
 namespace Resonate.Controllers
@@ -15,20 +17,35 @@ namespace Resonate.Controllers
         }
 
         [HttpPost("{user1}/{user2}")]
-        public bool AddMatch(Guid user1, Guid user2)
+        public User AddMatch(Guid user1, Guid user2)
         {
             try
             {
 
-                Boolean succes = _matchesRepo.AddMatch(user1, user2);
-                if (succes)
+                User result = _matchesRepo.AddMatch(user1, user2);
+
+                if (result != null)
                 {
-                    return succes;
+                    return result;
                 }
                 else
                 {
-                    return false;
+                    return result ;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("{id}")]
+        public List<User> GetMatches(Guid id)
+        {
+            try
+            {
+                List<User> matches = _matchesRepo.GetMatches(id);
+                return matches;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Resonate.Models;
@@ -14,7 +15,7 @@ namespace Resonate.Repositories
         }
 
         //Add Matches
-        public Boolean AddMatch(Guid user1, Guid user2)
+        public User AddMatch(Guid user1, Guid user2)
         {
             try
             {
@@ -26,6 +27,8 @@ namespace Resonate.Repositories
                     //De eerste persoon wil matchen / tweede heeft nog niet ja gezegd
                     _context.Matches.Add(new Matches(){ User1 = user1, User2 = user2, IsConfirmed = false });
                     _context.SaveChanges();
+                    User emUser = new User();
+                    return emUser;
                 }
                 else
                 {
@@ -33,14 +36,50 @@ namespace Resonate.Repositories
                     match.IsConfirmed = true;
                     _context.Entry(match).State = EntityState.Modified;
                     _context.SaveChanges();
+
+                    User user = _context.User.Where(u => u.UserId == user2)
+                        .Include(u => u.Artists)
+                        .Include(u => u.Genres)
+                        .SingleOrDefault();
+                    return user ;
                 }
-                return true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-           
+        }
+
+        public List<User> GetMatches(Guid userId)
+        {
+            try
+            {
+                var ids = _context.Matches.Where(m => m.User1 == userId && m.IsConfirmed == true).Select(m => m.User2).ToArray();
+                var ids2 = _context.Matches.Where(m => m.User2 == userId && m.IsConfirmed == true).Select(m => m.User1).ToArray();
+
+                List<User> matches = new List<User>();
+
+                foreach(Guid id in ids)
+                {
+                    matches.Add(_context.User.Where(u => u.UserId == id)
+                        .Include(u => u.Artists)
+                        .Include(u => u.Genres)
+                        .SingleOrDefault());
+                }
+
+                foreach (Guid id in ids2)
+                {
+                    matches.Add(_context.User.Where(u => u.UserId == id)
+                        .Include(u => u.Artists)
+                        .Include(u => u.Genres)
+                        .SingleOrDefault());
+                }
+                return matches;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
