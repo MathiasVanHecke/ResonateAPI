@@ -17,7 +17,7 @@ namespace Resonate.Controllers
         }
 
         [HttpPost("{user1}/{user2}")]
-        public User AddMatch(Guid user1, Guid user2)
+        public User AddMatch(string user1, string user2)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Resonate.Controllers
         }
 
         [HttpGet("{id}")]
-        public List<User> GetMatches(Guid id)
+        public List<User> GetMatches(String id)
         {
             try
             {

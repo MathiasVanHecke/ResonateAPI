@@ -15,7 +15,7 @@ namespace Resonate.Repositories
         }
 
         //Add Matches
-        public User AddMatch(Guid user1, Guid user2)
+        public User AddMatch(String user1, String user2)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Resonate.Repositories
                     _context.Entry(match).State = EntityState.Modified;
                     _context.SaveChanges();
 
-                    User user = _context.User.Where(u => u.UserId == user2)
+                    User user = _context.User.Where(u => u.id == user2)
                         .Include(u => u.Artists)
                         .Include(u => u.Genres)
                         .SingleOrDefault();
@@ -50,7 +50,7 @@ namespace Resonate.Repositories
             }
         }
 
-        public List<User> GetMatches(Guid userId)
+        public List<User> GetMatches(String userId)
         {
             try
             {
@@ -59,17 +59,17 @@ namespace Resonate.Repositories
 
                 List<User> matches = new List<User>();
 
-                foreach(Guid id in ids)
+                foreach(String id in ids)
                 {
-                    matches.Add(_context.User.Where(u => u.UserId == id)
+                    matches.Add(_context.User.Where(u => u.id == id)
                         .Include(u => u.Artists)
                         .Include(u => u.Genres)
                         .SingleOrDefault());
                 }
 
-                foreach (Guid id in ids2)
+                foreach (String id in ids2)
                 {
-                    matches.Add(_context.User.Where(u => u.UserId == id)
+                    matches.Add(_context.User.Where(u => u.id == id)
                         .Include(u => u.Artists)
                         .Include(u => u.Genres)
                         .SingleOrDefault());

@@ -33,6 +33,7 @@ namespace Resonate
 
             services.AddTransient<IUserRepo, UserRepo>();
             services.AddTransient<IMatchesRepo, MatchesRepo>();
+            services.AddTransient<IGenresRepo, GenresRepo>();
 
             services.AddDbContext<ResonateContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("ResonateContext")));

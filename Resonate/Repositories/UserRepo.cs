@@ -25,10 +25,10 @@ namespace Resonate.Repositories
                 //MATCHES MET ARTIESTEN
                 foreach (Artist artist in user.Artists)
                 {
-                    Guid[] ids = _context.Artist.Where(u => u.ArtistName == Convert.ToString(artist.ArtistName) && u.UserId != user.UserId).Select(u => u.UserId).ToArray();
-                    foreach (Guid id in ids)
+                    String[] ids = _context.Artist.Where(u => u.ArtistName == Convert.ToString(artist.ArtistName) && u.UserId != user.id).Select(u => u.UserId).ToArray();
+                    foreach (String id in ids)
                     {
-                        _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 1, Name = artist.ArtistName });
+                        _context.PotMatches.Add(new PotMatches() { User1 = user.id, User2 = id, MatchLevel = 1, Name = artist.ArtistName });
                         _context.SaveChanges();
                     }
                 }
@@ -36,10 +36,10 @@ namespace Resonate.Repositories
                 //MATCHES MET GENRES
                 foreach (Genre genre in user.Genres)
                 {
-                    Guid[] ids = _context.Genre.Where(u => u.GenreName == Convert.ToString(genre.GenreName) && u.UserId != user.UserId).Select(u => u.UserId).ToArray();
-                    foreach (Guid id in ids)
+                    String[] ids = _context.Genre.Where(u => u.GenreName == Convert.ToString(genre.GenreName) && u.UserId != user.id).Select(u => u.UserId).ToArray();
+                    foreach (String id in ids)
                     {
-                        _context.PotMatches.Add(new PotMatches() { User1 = user.UserId, User2 = id, MatchLevel = 2, Name = genre.GenreName });
+                        _context.PotMatches.Add(new PotMatches() { User1 = user.id, User2 = id, MatchLevel = 2, Name = genre.GenreName });
                         _context.SaveChanges();
                     }
                 }

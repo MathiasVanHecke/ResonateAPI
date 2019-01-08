@@ -21,7 +21,7 @@ namespace Resonate.Controllers
         {
             try
             {
-                user.UserId = Guid.NewGuid();
+
                 Boolean succes = _userRepo.RegisterUser(user);
                 if (succes)
                 {

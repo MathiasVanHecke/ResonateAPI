@@ -6,7 +6,7 @@ namespace Resonate.Repositories
 {
     public interface IMatchesRepo
     {
-        User AddMatch(Guid user1, Guid user2);
-        List<User> GetMatches(Guid userId);
+        User AddMatch(String user1, String user2);
+        List<User> GetMatches(String userId);
     }
 }

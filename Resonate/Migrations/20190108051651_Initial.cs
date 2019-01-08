@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Resonate.Migrations
@@ -14,8 +13,9 @@ namespace Resonate.Migrations
                 {
                     MatchesId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    User1 = table.Column<Guid>(nullable: false),
-                    User2 = table.Column<Guid>(nullable: false)
+                    User1 = table.Column<string>(nullable: true),
+                    User2 = table.Column<string>(nullable: true),
+                    IsConfirmed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,8 +28,8 @@ namespace Resonate.Migrations
                 {
                     PotMatchesId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    User1 = table.Column<Guid>(nullable: false),
-                    User2 = table.Column<Guid>(nullable: false),
+                    User1 = table.Column<string>(nullable: true),
+                    User2 = table.Column<string>(nullable: true),
                     MatchLevel = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -42,18 +42,18 @@ namespace Resonate.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    BirthDate = table.Column<DateTime>(nullable: false),
-                    UrlPf = table.Column<string>(nullable: true),
-                    HrefSpotify = table.Column<string>(nullable: true),
-                    Lat = table.Column<int>(nullable: false),
-                    Long = table.Column<int>(nullable: false),
-                    Beschrijving = table.Column<string>(nullable: true)
+                    id = table.Column<string>(nullable: false),
+                    country = table.Column<string>(nullable: true),
+                    display_name = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
+                    href = table.Column<string>(nullable: true),
+                    birthdate = table.Column<string>(nullable: true),
+                    urlPf = table.Column<string>(nullable: true),
+                    beschrijving = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.PrimaryKey("PK_User", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +62,7 @@ namespace Resonate.Migrations
                 {
                     ArtistId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     ArtistName = table.Column<string>(nullable: true),
                     HrefSpotify = table.Column<string>(nullable: true),
                     UrlPf = table.Column<string>(nullable: true)
@@ -74,8 +74,8 @@ namespace Resonate.Migrations
                         name: "FK_Artist_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +84,7 @@ namespace Resonate.Migrations
                 {
                     GenreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     GenreName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -94,8 +94,8 @@ namespace Resonate.Migrations
                         name: "FK_Genre_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
