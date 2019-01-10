@@ -8,20 +8,20 @@ namespace Resonate.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenreController
+    public class ArtistController
     {
-        private readonly IGenresRepo _genresRepo;
-        public GenreController(IGenresRepo genresRepo)
+        private readonly IArtistsRepo _artistRepo;
+        public ArtistController(IArtistsRepo artistsRepo)
         {
-            _genresRepo = genresRepo;
+            _artistRepo = artistsRepo;
         }
 
         [HttpGet()]
-        public List<string> GetGenres()
+        public List<Artist> GetArtists()
         {
             try
             {
-                return _genresRepo.GetAllGenres();
+                return _artistRepo.GetAllArtists();
             }
             catch (Exception ex)
             {
