@@ -37,5 +37,11 @@ namespace Resonate.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("{id}")]
+        public User GetUser(string id)
+        {
+            return _userRepo.GetUser(id);
+        }
     }
 }

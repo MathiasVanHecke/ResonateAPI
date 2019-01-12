@@ -8,5 +8,8 @@ namespace Resonate.Repositories
     {
         User AddMatch(String user1, String user2);
         List<User> GetMatches(String userId);
+
+
+        List<User> GetPotMatches(String user, int matchLevel, string name);
     }
 }

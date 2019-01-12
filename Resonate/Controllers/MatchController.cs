@@ -52,5 +52,18 @@ namespace Resonate.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("{user}/{matchLevel}/{value}")]
+        public List<User> GetPotMatches(String user, int matchLevel, string value)
+        {
+            try
+            {
+                return _matchesRepo.GetPotMatches(user, matchLevel, value); ;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

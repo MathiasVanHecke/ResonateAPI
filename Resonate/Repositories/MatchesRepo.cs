@@ -81,5 +81,41 @@ namespace Resonate.Repositories
                 throw ex;
             }
         }
+
+        public List<User> GetPotMatches(String user, int matchLevel, string name)
+        {
+            try
+            {
+                var ids = _context.PotMatches.Where(p => p.User1 == user && p.MatchLevel == matchLevel && p.Name == name).Select(p => p.User2).ToArray();
+                var ids2 = _context.PotMatches.Where(p => p.User2 == user && p.MatchLevel == matchLevel && p.Name == name).Select(p => p.User1).ToArray();
+
+                List<User> potmatches = new List<User>();
+
+                foreach (String id in ids)
+                {
+                    potmatches.Add(_context.User.Where(u => u.id == id)
+                        .Include(u => u.Artists)
+                        .Include(u => u.Genres)
+                        .SingleOrDefault());
+                }
+
+                foreach (String id in ids2)
+                {
+                    potmatches.Add(_context.User.Where(u => u.id == id)
+                        .Include(u => u.Artists)
+                        .Include(u => u.Genres)
+                        .SingleOrDefault());
+                }
+
+                List<User> matches = new List<User>();
+                matches = potmatches.Distinct().ToList();
+
+                return matches;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

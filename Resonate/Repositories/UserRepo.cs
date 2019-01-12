@@ -50,5 +50,10 @@ namespace Resonate.Repositories
                 throw ex;
             }
         }
+
+        public User GetUser(string id)
+        {
+            return _context.User.Where(u => u.id == id).Include(u => u.Artists).Include(u => u.Genres).SingleOrDefault();
+        }
     }
 }

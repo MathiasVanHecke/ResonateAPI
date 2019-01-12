@@ -21,5 +21,6 @@
   <ItemGroup>
     <Compile Remove="Controllers\EmptyClass.cs" />
     <Compile Remove="Migrations\20181214151730_Initial.cs" />
+    <Compile Remove="Controllers\PotMatchesController.cs" />
   </ItemGroup>
 </Project>
