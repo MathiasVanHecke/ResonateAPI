@@ -21,7 +21,6 @@ namespace Resonate.Controllers
         {
             try
             {
-
                 User result = _matchesRepo.AddMatch(user1, user2);
 
                 if (result != null)

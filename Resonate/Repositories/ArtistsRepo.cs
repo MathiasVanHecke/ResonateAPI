@@ -15,7 +15,11 @@ namespace Resonate.Repositories
 
         public List<Artist> GetAllArtists()
         {
-            return _context.Artist.Distinct().ToList();
+            List<Artist> artists = _context.Artist
+                .GroupBy(a => new { a.ArtistName, a.HrefSpotify, a.UrlPf })
+                .Select(a => a.First())
+                .ToList();
+            return artists;
         }
     }
 }
